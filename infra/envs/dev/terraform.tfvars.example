@@ -1,0 +1,26 @@
+project_name = "aws-kubernetes-iac"
+environment  = "dev"
+aws_region   = "eu-central-1"
+
+vpc_cidr = "10.0.0.0/16"
+
+public_subnet_cidrs = [
+  "10.0.1.0/24",
+  "10.0.2.0/24"
+]
+
+public_azs = [
+  "eu-central-1a",
+  "eu-central-1b"
+]
+
+admin_cidr = "x.x.x.x/32"
+
+ami_id        = "ami-0e7c42697f755b023"
+instance_type = "t3.micro"
+key_name      = "your-key-name"
+worker_count  = 2
+
+tags = {
+  Owner = "Name"
+}
