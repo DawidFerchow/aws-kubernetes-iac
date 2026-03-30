@@ -2,4 +2,7 @@
 - name: Prepare Kubernetes nodes
   hosts: k8s_cluster
   become: true
-  roles: []
+  roles:
+    - common
+    - container-runtime
+    - kubernetes-prereqs
