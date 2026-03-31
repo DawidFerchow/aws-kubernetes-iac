@@ -1,0 +1,10 @@
+[control_plane]
+control-1 ansible_host=1.2.3.4 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/aws-k8s.pem
+
+[workers]
+worker-1 ansible_host=1.2.3.5 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/aws-k8s.pem
+worker-2 ansible_host=1.2.3.6 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/aws-k8s.pem
+
+[k8s_cluster:children]
+control_plane
+workers

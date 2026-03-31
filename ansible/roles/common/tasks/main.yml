@@ -1,0 +1,26 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+- name: Install base packages
+  apt:
+    name:
+      - curl
+      - wget
+      - gnupg
+      - ca-certificates
+      - apt-transport-https
+      - software-properties-common
+      - vim
+      - htop
+      - net-tools
+    state: present
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+- name: Disable swap in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^(.*\sswap\s.*)$'
+    replace: '# \1'
