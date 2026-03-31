@@ -1,0 +1,4 @@
+- name: Join node to Kubernetes cluster
+  command: "{{ hostvars['localhost']['kubeadm_join_command'] }}"
+  args:
+    creates: /etc/kubernetes/kubelet.conf
