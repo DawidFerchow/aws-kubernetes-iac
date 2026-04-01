@@ -71,3 +71,26 @@ The provisioned infrastructure includes:
 * VPC with public subnets
 * Security group for Kubernetes nodes
 * EC2 instances (1 control plane, 2 worker nodes)
+
+## Kubernetes cluster bootstrap (Ansible)
+
+After provisioning infrastructure with Terraform, configure the cluster using Ansible:
+
+### 1. Prepare inventory
+
+Update:
+
+ansible/inventory/inventory.ini
+
+### 2. Run playbook
+
+```bash
+cd ansible
+ansible-playbook -i inventory/inventory.ini playbooks/cluster.yml
+```
+
+### 3. Verify cluster
+
+```bash
+kubectl get nodes
+```
