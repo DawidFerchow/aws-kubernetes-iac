@@ -1,0 +1,34 @@
+- name: Prepare all nodes
+  hosts: all
+  become: yes
+  roles:
+    - common
+    - container-runtime
+    - kubernetes-prereqs
+
+- name: Initialize control plane
+  hosts: control_plane
+  become: yes
+  roles:
+    - k8s-control-plane
+
+  tasks:
+    - name: Generate join command
+      command: kubeadm token create --print-join-command
+      register: join_command_raw
+      changed_when: false
+
+    - name: Save join command on localhost
+      set_fact:
+        kubeadm_join_command: "{{ join_command_raw.stdout }}"
+      delegate_to: localhost
+      delegate_facts: true
+
+- name: Join workers to cluster
+  hosts: workers
+  become: yes
+  tasks:
+    - name: Join node to Kubernetes cluster
+      command: "{{ hostvars['localhost']['kubeadm_join_command'] }}"
+      args:
+        creates: /etc/kubernetes/kubelet.conf
